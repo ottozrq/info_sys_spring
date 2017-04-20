@@ -5,53 +5,41 @@ package com.ottozhang.ism.dataModel;
  */
 public class Identity {
     public Identity(){
-        uid = 0;
-        firstname = "";
-        lastname = "";
-        username = "";
-        age = 0;
+        id = 0;
+        name = "";
+        displayname = "";
         password = "";
         email = "";
     }
 
-    public int getUid() {
-        return uid;
+    private Integer id;
+    private String name;
+    private String displayname;
+    private String password;
+    private String email;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getDisplayname() {
+        return displayname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    public void setDisplayname(String displayname) {
+        this.displayname = displayname;
     }
 
     public String getPassword() {
@@ -69,25 +57,4 @@ public class Identity {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    @Override
-    public String toString() {
-        return "Identity{" +
-                "uid=" + uid +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", username='" + username + '\'' +
-                ", age=" + age +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
-    private int uid;
-    private String firstname;
-    private String lastname;
-    private String username;
-    private int age;
-    private String password;
-    private String email;
 }
