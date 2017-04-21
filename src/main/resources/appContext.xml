@@ -3,6 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="dao" name="dao" class="com.ottozhang.ism.dao.impl.IdentityDaoImpl"/>
+
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
             <value>dbconfig.properties</value>
@@ -11,10 +13,10 @@
 
     <bean id="dataSourceBean"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="driver"/>
-        <property name="url" value="dburl"/>
-        <property name="username" value="user"/>
-        <property name="password" value="password"/>
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${dburl}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
     </bean>
 
     <bean id="sessionFactory"
