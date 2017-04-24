@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by zhangruoqiu on 2017/4/21.
  */
-public class IdentityDaoImpl implements IdentityDao {
+public class IdentityDaoImpl implements IdentityDao<Identity> {
 
     @Inject
     SessionFactory sf;
@@ -42,7 +42,7 @@ public class IdentityDaoImpl implements IdentityDao {
         session.close();
     }
 
-    public List<Identity> search() {
+    public List<Identity> show() {
         Session session = sf.openSession();
         String queryString = "from Identity";
         Query query = session.createQuery(queryString);

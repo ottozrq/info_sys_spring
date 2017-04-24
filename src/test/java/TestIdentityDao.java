@@ -27,7 +27,7 @@ public class TestIdentityDao {
         identity.setDisplayname("orrozhang");
         dao.update(identity);
 
-        List<Identity> ids = dao.search();
+        List<Identity> ids = dao.show();
 
         System.out.println();
         for (Identity id:ids){
@@ -36,7 +36,7 @@ public class TestIdentityDao {
         System.out.println();
 
         dao.delete(identity);
-        ids = dao.search();
+        ids = dao.show();
 
         System.out.println();
         for (Identity id:ids){
