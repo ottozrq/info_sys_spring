@@ -3,7 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="dao" name="dao" class="com.ottozhang.ism.dao.impl.IdentityDaoImpl"/>
+    <bean id="dao" name="dao" class="com.ottozhang.ism.dao.impl.IdentityDaoImpl">
+        <property name="sessionFactory" ref="mySessionFactory"/>
+    </bean>
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
@@ -19,7 +21,7 @@
         <property name="password" value="${password}"/>
     </bean>
 
-    <bean id="sessionFactory"
+    <bean id="mySessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSourceBean"/>
         <property name="packagesToScan" value="com.ottozhang.ism.dataModel"/>

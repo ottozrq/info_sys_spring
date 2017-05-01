@@ -1,4 +1,5 @@
 import com.ottozhang.ism.dao.IdentityDao;
+import com.ottozhang.ism.dao.impl.IdentityDaoImpl;
 import com.ottozhang.ism.dataModel.Identity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class TestIdentityDao {
     @Inject
-    IdentityDao dao;
+    IdentityDaoImpl dao;
 
     @Test
     public void testIdentityDao(){
@@ -41,6 +42,14 @@ public class TestIdentityDao {
         for (Identity id:ids){
             System.out.println(id.toString());
         }
+        Identity login = new Identity();
+        login.setEmail("zhangxiang@gamil.com");
+        login.setPassword("12321");
+        ids = dao.get(login);
+        if (! ids.isEmpty())
+            System.out.println("login success");
+        else
+            System.out.println("login failed");
     }
 
 }

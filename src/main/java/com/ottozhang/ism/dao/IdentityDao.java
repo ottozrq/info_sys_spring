@@ -1,6 +1,5 @@
 package com.ottozhang.ism.dao;
 
-import com.ottozhang.ism.dataModel.Identity;
 
 import java.util.List;
 
@@ -11,5 +10,6 @@ public interface IdentityDao<T> {
     public void add(T identity);
     public void update(T identity);
     public void delete(T identity);
-    public List<Identity> show();
+    public List<T> show();
+    public List<T> get(T identity);
 }
