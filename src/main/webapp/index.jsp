@@ -1,3 +1,8 @@
+<%@ page import="org.springframework.beans.factory.BeanFactory" %>
+<%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext" %>
+<%@ page import="com.ottozhang.ism.dao.impl.CourseDaoImpl" %>
+<%@ page import="com.ottozhang.ism.dataModel.Course" %>
+<%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
   User: zhangruoqiu
@@ -5,6 +10,14 @@
   Time: 上午12:35
   To change this template use File | Settings | File Templates.
 --%>
+
+<%
+    BeanFactory bf = new ClassPathXmlApplicationContext("/appContext.xml");
+    CourseDaoImpl dao = bf.getBean("courseDao", CourseDaoImpl.class);
+    String courses = session.getAttribute("courses").toString();
+    List<Course> courseList = dao.getMyList(courses);
+%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -27,7 +40,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Dashboard</a></li>
+                <li><a href="index.jsp">Dashboard</a></li>
                 <li><a href="#">Profile</a></li>
                 <li><a href="#">Help</a></li>
             </ul>
@@ -42,41 +55,65 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">Class list <span class="sr-only">(current)</span></a></li>
+                <li><a href="courseList.jsp">Courses list <span class="sr-only">(current)</span></a></li>
+                <li class="active" href="index.jsp"><a href="#">My Courses</a></li>
                 <li><a href="#">Calender</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Welcome</h1>
+            <h1 class="page-header">Welcome, <%=session.getAttribute("username")%></h1>
 
             <div class="row placeholders">
                 <div class="col-xs-6 col-sm-3 placeholder">
-                    <img src="" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
-                    <h4>Label</h4>
-                    <span class="text-muted">Something else</span>
+                    <img src="img/a2ef4f4fdf60e38d0400a3d4decdf630.jpg" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+                    <h4><%=session.getAttribute("username")%></h4>
                 </div>
             </div>
 
-            <h2 class="sub-header">List of courses</h2>
+            <h2 class="sub-header">My courses</h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
-                        <th>Header</th>
+                        <th>Title</th>
+                        <th>Teacher</th>
+                        <th>Groups</th>
+                        <th>Info</th>
+                        <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
+                        <%
+                            if (courseList != null) {
+                                for (Course course : courseList) {
+                                    String title = course.getTitle();
+                                    String teacher = course.getTeacher();
+                                    String groups = course.getGroyps();
+                        %>
                     <tr>
-                        <td>1,001</td>
-                        <td>Lorem</td>
-                        <td>ipsum</td>
-                        <td>dolor</td>
-                        <td>sit</td>
+                        <th><%= title%></th>
+                        <th><%= teacher%></th>
+                        <th><%= groups%></th>
+                        <th>
+                            <form method="post"
+                                  action="courseInfo.jsp">
+                                <input type="hidden" name="course" value="<%=title.replace("\"","'")%>">
+                                <input type="hidden" name="groups" value="<%=groups%>">
+                                <button type="submit">
+                                    info
+                                </button></form>
+                        </th>
+                        <th>
+                            <form method="post"
+                                action="<%=request.getContextPath()%>/deleteCourseServlet">
+                                <input type="hidden" name="course" value="<%=title.replace("\"","'")%>">
+                                <input type="hidden" name="groups" value="<%=groups%>">
+                            <button type="submit">
+                            delete
+                        </button></form>
+                        </th>
                     </tr>
+                        <%}}%>
                     </tbody>
                 </table>
             </div>

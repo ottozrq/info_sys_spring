@@ -1,5 +1,9 @@
 package com.ottozhang.ism.dataModel;
 
+import com.mysql.cj.x.json.JsonArray;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import javax.persistence.*;
 
 /**
@@ -14,6 +18,7 @@ public class Identity {
         displayname = "";
         password = "";
         email = "";
+        courses = "[]";
     }
 
     public Identity(String name, String displayname, String password, String email) {
@@ -36,6 +41,8 @@ public class Identity {
     private String password;
     @Column(name = "email")
     private String email;
+    @Column(name = "courses")
+    private String courses;
 
     public Integer getId() {
         return id;
@@ -76,6 +83,36 @@ public class Identity {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getCourses() {
+        return courses;
+    }
+
+    public void setCourses(String courses) {
+        this.courses = courses;
+    }
+
+    public void addCourse(String course){
+        JSONArray js = null;
+        if (this.courses.equals("[]")) {
+            js = new JSONArray();
+        } else {
+            js = new JSONArray(this.courses);
+        }
+        JSONObject jo = new JSONObject(course);
+        js.put(jo);
+        this.courses = js.toString();
+    }
+
+    public void deleteCourse(String course){
+        JSONArray js = new JSONArray(this.courses);
+        for (int i = 0; i < js.length(); i++){
+            if (js.get(i).toString().equals(course))
+                js.remove(i);
+        }
+        this.courses = js.toString();
+    }
+
 
     @Override
     public String toString() {

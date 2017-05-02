@@ -10,6 +10,15 @@
         <servlet-class>com.ottozhang.ism.servlet.LoginServlet</servlet-class>
     </servlet>
 
+    <servlet-mapping>
+        <servlet-name>AddCourseServlet</servlet-name>
+        <url-pattern>/addCourseServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>AddCourseServlet</servlet-name>
+        <servlet-class>com.ottozhang.ism.servlet.AddCourseServlet</servlet-class>
+    </servlet>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>

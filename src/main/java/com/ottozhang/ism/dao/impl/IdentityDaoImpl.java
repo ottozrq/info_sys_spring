@@ -2,6 +2,7 @@ package com.ottozhang.ism.dao.impl;
 
 import com.ottozhang.ism.dao.IdentityDao;
 import com.ottozhang.ism.dataModel.Identity;
+import jdk.nashorn.internal.ir.annotations.Immutable;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 @ContextConfiguration("file:/resources/appContext.xml")
 public class IdentityDaoImpl implements IdentityDao<Identity> {
-    @Autowired
+    @Inject
     SessionFactory sf;
 
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -60,7 +61,17 @@ public class IdentityDaoImpl implements IdentityDao<Identity> {
         return identityList;
     }
 
-    public List<Identity> get(Identity identity){
+    public List<Identity> get(Identity identity) {
+        Session session = sf.openSession();
+        String queryString = "from Identity where email = :email";
+        Query query = session.createQuery(queryString);
+        query.setParameter("email", identity.getEmail());
+        List<Identity> identityList = query.list();
+        session.close();
+        return identityList;
+    }
+
+    public List<Identity> check(Identity identity){
         Session session = sf.openSession();
         String queryString = "from Identity where email = :email and password = :password";
         Query query = session.createQuery(queryString);
@@ -70,4 +81,6 @@ public class IdentityDaoImpl implements IdentityDao<Identity> {
         session.close();
         return identityList;
     }
+
+
 }

@@ -7,6 +7,10 @@
         <property name="sessionFactory" ref="mySessionFactory"/>
     </bean>
 
+    <bean id="courseDao" name="courseDao" class="com.ottozhang.ism.dao.impl.CourseDaoImpl">
+        <property name="sessionFactory" ref="mySessionFactory"/>
+    </bean>
+
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location">
             <value>dbconfig.properties</value>

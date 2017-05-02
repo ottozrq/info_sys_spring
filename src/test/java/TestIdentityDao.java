@@ -27,7 +27,10 @@ public class TestIdentityDao {
         identity.setDisplayname("orrozhang");
         dao.update(identity);
 
-        List<Identity> ids = dao.show();
+        Identity iddd = new Identity();
+        iddd.setEmail("otto");
+
+        List<Identity> ids = dao.get(iddd);
 
         System.out.println();
         for (Identity id:ids){

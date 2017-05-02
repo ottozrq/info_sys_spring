@@ -40,10 +40,12 @@ public class LoginServlet extends HttpServlet {
             Identity identity = new Identity();
             identity.setEmail(email);
             identity.setPassword(pwd);
-            List<Identity> ids = dao.get(identity);
+            List<Identity> ids = dao.check(identity);
             if (ids != null && ! ids.isEmpty()){
-                request.setAttribute("flag", "login_success");
-                request.setAttribute("email", ids.get(0).getName());
+                request.getSession().setAttribute("flag", "login_success");
+                request.getSession().setAttribute("email", ids.get(0).getEmail());
+                request.getSession().setAttribute("username", ids.get(0).getName());
+                request.getSession().setAttribute("courses", ids.get(0).getCourses());
                 if (returnUri != null) {
                     rd = request.getRequestDispatcher(returnUri);
                 } else {
