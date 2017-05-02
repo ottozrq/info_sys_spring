@@ -26,6 +26,7 @@ public class Identity {
         this.displayname = displayname;
         this.password = password;
         this.email = email;
+        courses = "[]";
     }
 
     @Id

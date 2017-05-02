@@ -25,8 +25,8 @@ public class PermissionFilter implements Filter {
         HttpSession session = request.getSession();
         String flag = (String)session.getAttribute("flag");
         if (servletPath!=null
-                && (servletPath.equals("login.jsp")
-                    || servletPath.equals("/loginServlet")
+                && (servletPath.equals("/login.jsp") || servletPath.equals("/regist.jsp")
+                    || servletPath.equals("/loginServlet") || servletPath.equals("/registServlet")
                     || servletPath.indexOf("/webjars") > 0
                     || servletPath.indexOf("js/") > 0
                     || servletPath.indexOf("css/") > 0)) {

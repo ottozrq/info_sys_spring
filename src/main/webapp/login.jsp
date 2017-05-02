@@ -35,8 +35,9 @@
                 </label>
             </div>
             <input class="btn btn-lg btn-primary btn-block" type="submit" onclick="return check(this)" value="Sign in">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Regist</button>
+            <a class="btn btn-lg btn-primary btn-block" href="regist.jsp">Regist</a>
         </form>
+
     </div>
 </body>
 </html>
