@@ -34,7 +34,14 @@ public class RegistServlet extends HttpServlet {
             rd.forward(request, response);
         }
         Identity identity = new Identity(name, name, password, email);
-        dao.add(identity);
+        try {
+            dao.add(identity);
+        } catch (Exception e) {
+            System.err.println(e.toString());
+            request.setAttribute("msg", "name or email already exist.");
+            rd = request.getRequestDispatcher("regist.jsp");
+            rd.forward(request, response);
+        }
         request.getSession().setAttribute("flag", "login_success");
         request.getSession().setAttribute("email", identity.getEmail());
         request.getSession().setAttribute("username", identity.getName());
