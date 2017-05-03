@@ -28,14 +28,14 @@
             <label for="inputEmail" class="sr-only">Email address</label>
             <input type="email" id="inputEmail" class="form-control" placeholder="Email address" name="email" required autofocus>
             <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="pwd" required>
+            <input type="password" id="inputPassword" class="form-control"  placeholder="Password" name="pwd" required>
             <div class="checkbox">
                 <label>
                     <input type="checkbox" value="remember-me"> Remember me
                 </label>
             </div>
             <input class="btn btn-lg btn-primary btn-block" type="submit" onclick="return check(this)" value="Sign in">
-            <a class="btn btn-lg btn-primary btn-block" href="regist.jsp">Regist</a>
+            <a class="btn btn-lg btn-primary btn-block" href="regist.jsp">Register</a>
         </form>
 
     </div>

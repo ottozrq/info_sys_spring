@@ -2,7 +2,10 @@
 <%@ page import="org.springframework.context.support.ClassPathXmlApplicationContext" %>
 <%@ page import="com.ottozhang.ism.dao.impl.CourseDaoImpl" %>
 <%@ page import="com.ottozhang.ism.dataModel.Course" %>
-<%@ page import="java.util.List" %>
+<%@ page import="com.ottozhang.ism.util.CourseCompara" %>
+<%@ page import="java.text.DateFormat" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.*" %>
 <%--
   Created by IntelliJ IDEA.
   User: zhangruoqiu
@@ -14,14 +17,22 @@
 <%
     BeanFactory bf = new ClassPathXmlApplicationContext("/appContext.xml");
     CourseDaoImpl dao = bf.getBean("courseDao", CourseDaoImpl.class);
-
-    List<Course> courseList = dao.getList();
+    String courses = session.getAttribute("courses").toString();
+    Calendar c = GregorianCalendar.getInstance();
+    c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+    DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    String startDate = "", endDate = "";
+    startDate = df.format(c.getTime());
+    c.add(Calendar.DATE, 6);
+    endDate = df.format(c.getTime());
+    List<Course> courseList = dao.getByDate(courses, startDate, endDate);
+    Collections.sort(courseList, new CourseCompara());
 %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Dashboard</title>
+    <title>Calender</title>
     <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/dashboard.css" rel="stylesheet">
 </head>
@@ -55,43 +66,38 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="courseList.jsp">Courses list <span class="sr-only">(current)</span></a></li>
+                <li><a href="courseList.jsp">Courses list <span class="sr-only">(current)</span></a></li>
                 <li><a href="index.jsp">My Courses</a></li>
-                <li><a href="calender.jsp">Calender</a></li>
+                <li class="active"><a href="calender.jsp">Calender</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">Welcome, <%=session.getAttribute("username")%></h1>
 
-            <h2 class="sub-header">List of courses</h2>
+            <h2 class="sub-header">Courses for this week</h2>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                     <tr>
+                        <th>Date</th>
+                        <th>Duration</th>
                         <th>Title</th>
-                        <th>Teacher</th>
-                        <th>Groups</th>
-                        <th>Add Course</th>
+                        <th>Room</th>
                     </tr>
                     </thead>
                     <tbody>
                     <%
                         for(Course course:courseList){
                             String title = course.getTitle();
-                            String teacher = course.getTeacher();
-                            String groups = course.getGroyps();
+                            String date = course.getDatet();
+                            String duration = course.getDuration();
+                            String room = course.getRoom();
                     %>
                     <tr>
+                        <th><%= date%></th>
+                        <th><%= duration%></th>
                         <th><%= title%></th>
-                        <th><%= teacher%></th>
-                        <th><%= groups%></th>
-                        <th><form method="post"
-                                  action="<%=request.getContextPath()%>/addCourseServlet">
-                            <input type="hidden" name="course" value="<%=title.replace("\"","'")%>">
-                            <input type="hidden" name="groups" value="<%=groups%>">
-                            <button type="submit">
-                                Add
-                            </button></form></th>
+                        <th><%= room%></th>
                     </tr>
                     <%}%>
                     </tbody>

@@ -21,7 +21,7 @@
         <% if(request.getAttribute("return_uri") !=null) {%>
         <input type="hidden" name="return_uri" value="<%request.getAttribute("return_uri"); %>">
         <%} %>
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading">Please sign up</h2>
         <% if (request.getAttribute("msg") != null) {%>
         <h4 class="bg-danger"><%=request.getAttribute("msg")%></h4>
         <%}%>
@@ -39,7 +39,7 @@
                 <input type="checkbox" id="checker" value="I Agree" required> I Agree the following <a href="">policy</a>.
             </label>
         </div>
-        <input class="btn btn-lg btn-primary btn-block" type="submit" onclick="return checkr(this)" value="Regist and Login">
+        <input class="btn btn-lg btn-primary btn-block" type="submit" onclick="return checkr(this)" value="Register and Login">
     </form>
 </div>
 </body>

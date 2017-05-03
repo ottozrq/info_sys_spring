@@ -73,7 +73,7 @@ public class CourseDaoImpl implements IdentityDao<Course> {
         Session session = sf.openSession();
         String queryString = "from Course " +
                 "where title = :title and groups = :groups " +
-                "group by title " +
+                "group by title, groups " +
                 "order by title";
         List<Course> courseList = null;
         for (int i = 0; i < js.length(); i++){
@@ -83,6 +83,32 @@ public class CourseDaoImpl implements IdentityDao<Course> {
             Query query = session.createQuery(queryString);
             query.setParameter("title",title.replace("'", "\""));
             query.setParameter("groups",groups);
+            if (courseList == null)
+                courseList = new ArrayList<Course>(query.list());
+            else
+                courseList.addAll(query.list());
+        }
+        session.close();
+        return courseList;
+    }
+
+    public List<Course> getByDate(String courses, String startDate, String endDate){
+        JSONArray js = new JSONArray(courses);
+        Session session = sf.openSession();
+        String queryString = "from Course " +
+                "where title = :title and groups = :groups " +
+                "and datet between :startDate and :endDate " +
+                "order by datet";
+        List<Course> courseList = null;
+        for (int i = 0; i < js.length(); i++){
+            JSONObject jso = js.getJSONObject(i);
+            String title = jso.keys().next();
+            String groups = jso.getString(title);
+            Query query = session.createQuery(queryString);
+            query.setParameter("title",title.replace("'", "\""));
+            query.setParameter("groups",groups);
+            query.setParameter("startDate",startDate);
+            query.setParameter("endDate", endDate);
             if (courseList == null)
                 courseList = new ArrayList<Course>(query.list());
             else
